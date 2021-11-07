@@ -26,6 +26,28 @@ MainWindow::MainWindow(QWidget *parent) :
         dlg2->show();
         qDebug() << "非模态对话框弹出了";
 #endif
+        /*消息对话框*/
+#if 0
+        /*错误对话框*/
+        QMessageBox::critical(this, "critical", "错误"); //标题 内容
+#elif 0
+        /*信息对话框*/
+        QMessageBox::information(this, "info", "信息");
+#elif 0
+        /*提问对话框*/
+        /*参数1：父亲 参数2：标题 参数3：提示内容 参数4：按键类型 参数5：默认关联回车按键*/
+        if (QMessageBox::Save == QMessageBox::question(this, "ques", "提问", QMessageBox::Save | QMessageBox::Cancel, QMessageBox::Cancel))
+        {
+            qDebug() << "选择的是保存";
+        }
+        else
+        {
+            qDebug() << "选择的是取消";
+        }
+#elif 1
+        /*警告对话框*/
+        QMessageBox::warning(this, "warning", "警告");
+#endif
     });
 }
 
