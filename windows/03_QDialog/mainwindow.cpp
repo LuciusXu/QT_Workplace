@@ -3,6 +3,9 @@
 #include <QDialog>
 #include <QDebug>
 #include <QMessageBox>
+#include <QColorDialog>
+#include <QFileDialog>
+#include <QFontDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,21 +14,24 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //点击新建按钮 弹出一个对话框
     connect(ui->actionNew, &QAction::triggered, [=](){
+
+        /*对话框 分类*/
 #if 0
-        //对话框 分类
-        //模态对话框（不可以对其它窗口进行操作）非模态对话框（可以对其它窗口进行操作）
-        //模态创建 阻塞
+
+        /*模态对话框（不可以对其它窗口进行操作）非模态对话框（可以对其它窗口进行操作）*/
+        /*模态创建 阻塞*/
         QDialog dlg(this);
         dlg.resize(200, 100);
         dlg.exec();
         qDebug() << "模态对话框弹出了";
 #elif 1
-        //非模态对话框
+        /*非模态对话框*/
         QDialog *dlg2 = new QDialog(this);
         dlg2->resize(200, 100);
         dlg2->show();
         qDebug() << "非模态对话框弹出了";
 #endif
+
         /*消息对话框*/
 #if 0
         /*错误对话框*/
@@ -44,9 +50,27 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             qDebug() << "选择的是取消";
         }
-#elif 1
+#elif 0
         /*警告对话框*/
         QMessageBox::warning(this, "warning", "警告");
+#endif
+
+        /*其它标准对话框*/
+#if 0
+        /*颜色对话框*/
+        QColor color = QColorDialog::getColor(QColor(255, 0, 0));
+        qDebug() << "r = " << color.red() << "g = " << color.green() << "b = " << color.blue();
+#elif 0
+        /*文件对话框*/
+        /*参数1：父亲 参数2：标题 参数3：默认打开路径 参数4：过滤文件格式*/
+        /*返回值：选取文件的路径*/
+        QString str = QFileDialog::getOpenFileName(this, "打开文件", "C:\\Users\\43702\\Desktop", "(*.c)");
+        qDebug() << str;
+#elif 1
+        /*字体对话框*/
+        bool flag;
+        QFont font = QFontDialog::getFont(&flag, QFont("华文彩云", 36));
+        qDebug() << "字体:" << font.family().toUtf8().data() << "字号:" << font.pointSize() << "是否加粗:" << font.bold() << "是否倾斜:" << font.italic();
 #endif
     });
 }
