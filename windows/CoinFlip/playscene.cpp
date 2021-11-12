@@ -4,6 +4,7 @@
 #include <QPainter>
 #include "mypushbutton.h"
 #include <QTimer>
+#include <QLabel>
 
 PlayScene::PlayScene(int levelNum)
 {
@@ -39,6 +40,17 @@ PlayScene::PlayScene(int levelNum)
        });
     });
 
+    /*显示当前的关卡号*/
+    QLabel *label = new QLabel;
+    label->setParent(this);
+    QFont font;
+    font.setFamily("华文新魏"); //字体
+    font.setPointSize(20); //字号
+    QString str1 = QString("Level:%1").arg(this->levelIndex);
+    /*将字体设置到标签控件中*/
+    label->setFont(font);
+    label->setText(str1);
+    label->setGeometry(30, this->height()- 50, 120, 50);
 }
 
 void PlayScene::paintEvent(QPaintEvent *)
