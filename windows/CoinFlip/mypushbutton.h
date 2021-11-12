@@ -19,6 +19,10 @@ public:
     /*弹跳特效*/
     void zoom1(); //向下跳
     void zoom2(); //向上跳
+
+    /*重写按钮的按下和释放事件*/
+    void mousePressEvent(QMouseEvent *e); //按下
+    void mouseReleaseEvent(QMouseEvent *e); //释放
 signals:
 
 public slots:
