@@ -24,7 +24,17 @@ MainScene::MainScene(QWidget *parent) :
     MyPushButton * startBtn = new MyPushButton(":/res/MenuSceneStartButton.png");
     startBtn->setParent(this);
     startBtn->move(this->width() * 0.5 - startBtn->width() * 0.5, this->height() * 0.7);
-    chooseScene = new ChooseLevelScene; //实例化选关场景
+
+    /*实例化选关场景*/
+    chooseScene = new ChooseLevelScene;
+
+    /*监听选关场景的返回信号*/
+    connect(chooseScene, &ChooseLevelScene::chooseSceneBack, this, [=](){
+        chooseScene->hide(); //隐藏选关场景
+        this->show(); //显示主场景
+    });
+
+    /*监听开始按钮*/
     connect(startBtn, &MyPushButton::clicked, [=](){
        qDebug() << "点击了开始按钮";
        /*实现点击特效*/

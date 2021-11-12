@@ -11,6 +11,8 @@ public:
     /*重写绘图事件*/
     void paintEvent(QPaintEvent *);
 signals:
+    /*自定义信号，告诉主场景点击了返回*/
+    void chooseSceneBack(); //自定义信号，只需申明，无需实现
 
 public slots:
 };
