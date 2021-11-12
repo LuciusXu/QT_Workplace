@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainscene.cpp \
-    mypushbutton.cpp
+    mypushbutton.cpp \
+    chooselevelscene.cpp
 
 HEADERS  += mainscene.h \
-    mypushbutton.h
+    mypushbutton.h \
+    chooselevelscene.h
 
 FORMS    += mainscene.ui
 

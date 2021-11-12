@@ -4,6 +4,7 @@
 #include "mypushbutton.h"
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QTimer>
 
 MainScene::MainScene(QWidget *parent) :
     QMainWindow(parent),
@@ -23,11 +24,18 @@ MainScene::MainScene(QWidget *parent) :
     MyPushButton * startBtn = new MyPushButton(":/res/MenuSceneStartButton.png");
     startBtn->setParent(this);
     startBtn->move(this->width() * 0.5 - startBtn->width() * 0.5, this->height() * 0.7);
+    chooseScene = new ChooseLevelScene; //实例化选关场景
     connect(startBtn, &MyPushButton::clicked, [=](){
        qDebug() << "点击了开始按钮";
        /*实现点击特效*/
-    startBtn->zoom1();
-    startBtn->zoom2();
+        startBtn->zoom1();
+        startBtn->zoom2();
+
+        /*延时进入选关场景*/
+        QTimer::singleShot(500, this, [=](){
+            this->hide(); //隐藏主场景
+            chooseScene->show(); //显示选关场景
+        });
     });
 }
 
