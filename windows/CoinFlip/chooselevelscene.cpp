@@ -4,6 +4,7 @@
 #include "mypushbutton.h"
 #include <QDebug>
 #include <QTimer>
+#include <QLabel>
 
 ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
 {
@@ -34,6 +35,34 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
             emit this->chooseSceneBack(); //主场景监听ChooseLevelScene的返回按钮
        });
     });
+
+    /*创建选关按钮*/
+    for (int i = 0; i < 20; i++)
+    {
+        /*添加按钮*/
+        MyPushButton *menuBtn = new MyPushButton(":/res/LevelIcon.png");
+        menuBtn->setParent(this); //设置父类
+        menuBtn->move(25 + i % 4 * 70, 130 + i / 4 * 70);
+
+        /*监听每个关卡按钮的点击事件*/
+        connect(menuBtn, &MyPushButton::clicked, [=](){
+            QString str = QString("选中了第%1关").arg(i + 1);
+            qDebug() << str;
+        });
+
+        /*添加数字*/
+        QLabel *label = new QLabel;
+        label->setParent(this);
+        label->setFixedSize(menuBtn->width(), menuBtn->height());
+        label->setText(QString::number(i + 1));
+        label->move(25 + i % 4 * 70, 130 + i / 4 * 70);
+
+        /*设置label上的文字对齐方式*/
+        label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter); //水平居中和垂直居中
+
+        /*设置鼠标穿透label*/
+        label->setAttribute(Qt::WA_TransparentForMouseEvents); //51号属性
+    }
 }
 
 /*绘图事件方法*/
