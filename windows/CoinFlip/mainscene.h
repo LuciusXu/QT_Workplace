@@ -15,6 +15,8 @@ public:
     explicit MainScene(QWidget *parent = 0);
     ~MainScene();
 
+    /*重写paintEvent事件 画背景图*/
+    void paintEvent(QPaintEvent *);
 private:
     Ui::MainScene *ui;
 };
