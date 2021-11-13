@@ -5,6 +5,7 @@
 #include "mypushbutton.h"
 #include <QTimer>
 #include <QLabel>
+#include "mycoin.h"
 
 PlayScene::PlayScene(int levelNum)
 {
@@ -51,6 +52,26 @@ PlayScene::PlayScene(int levelNum)
     label->setFont(font);
     label->setText(str1);
     label->setGeometry(30, this->height()- 50, 120, 50);
+
+    /*显示金币背景图*/
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            /*绘制背景图片*/
+            QPixmap pix = QPixmap(":/res/BoardNode.png");
+            QLabel *label = new QLabel;
+            label->setGeometry(0, 0, pix.width(), pix.height());
+            label->setPixmap(pix);
+            label->setParent(this);
+            label->move(57 + i * 50, 200 + j * 50);
+
+            /*创建金币*/
+            MyCoin *coin = new MyCoin(":/res/Coin0001.png");
+            coin->setParent(this);
+            coin->move(59 + i * 50, 204 + j *50);
+        }
+    }
 }
 
 void PlayScene::paintEvent(QPaintEvent *)
