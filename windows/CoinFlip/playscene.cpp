@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QLabel>
 #include "mycoin.h"
+#include "dataconfig.h"
 
 PlayScene::PlayScene(int levelNum)
 {
@@ -53,6 +54,16 @@ PlayScene::PlayScene(int levelNum)
     label->setText(str1);
     label->setGeometry(30, this->height()- 50, 120, 50);
 
+    dataConfig config;
+    /*初始化每个关卡的二维数组*/
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            this->gameArray[i][j] = config.mData[this->levelIndex][i][j];
+        }
+    }
+
     /*显示金币背景图*/
     for (int i = 0; i < 4; i++)
     {
@@ -67,9 +78,29 @@ PlayScene::PlayScene(int levelNum)
             label->move(57 + i * 50, 200 + j * 50);
 
             /*创建金币*/
-            MyCoin *coin = new MyCoin(":/res/Coin0001.png");
+            QString str;
+            if (this->gameArray[i][j] == 1) //显示金币
+            {
+                str = ":/res/Coin0001.png";
+            }
+            else //显示银币
+            {
+                str = ":/res/Coin0008.png";
+            }
+
+            MyCoin *coin = new MyCoin(str);
             coin->setParent(this);
             coin->move(59 + i * 50, 204 + j *50);
+
+            /*给金币属性赋值*/
+            coin->posX = i;
+            coin->posY = j;
+            coin->flag = this->gameArray[i][j]; //1正面 0反面
+
+            /*点击金币 进行翻转*/
+            connect(coin, &MyCoin::clicked, [=](){
+                coin->changeFlag();
+            });
         }
     }
 }

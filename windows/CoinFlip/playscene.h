@@ -12,6 +12,8 @@ public:
 
     /*重写paintEvent事件*/
     void paintEvent(QPaintEvent *);
+    int gameArray[4][4]; //二维数组维护每关的具体数据
+
 signals:
     void chooseSceneBack();
 public slots:
