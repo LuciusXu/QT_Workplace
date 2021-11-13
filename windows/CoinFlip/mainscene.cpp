@@ -34,6 +34,8 @@ MainScene::MainScene(QWidget *parent) :
 
     /*监听选关场景的返回信号*/
     connect(chooseScene, &ChooseLevelScene::chooseSceneBack, this, [=](){
+        this->setGeometry(chooseScene->geometry());
+
         chooseScene->hide(); //隐藏选关场景
         this->show(); //显示主场景
     });
@@ -49,6 +51,9 @@ MainScene::MainScene(QWidget *parent) :
 
         /*延时进入选关场景*/
         QTimer::singleShot(500, this, [=](){
+            /*设置chooseScene场景位置*/
+            chooseScene->setGeometry(this->geometry());
+
             this->hide(); //隐藏主场景
             chooseScene->show(); //显示选关场景
         });

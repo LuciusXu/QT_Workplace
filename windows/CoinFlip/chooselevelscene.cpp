@@ -64,10 +64,14 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
             /*进入到游戏场景*/
             this->hide(); //隐藏选关场景
             play = new PlayScene(i + 1); //创建游戏场景
+            /*设置游戏场景初始位置*/
+            play->setGeometry(this->geometry());
             play->show(); //显示游戏场景
 
             connect(play, &PlayScene::chooseSceneBack, [=](){
-               this->show();
+               this->setGeometry(play->geometry());
+
+                this->show();
                delete play;
                 play = NULL;
             });
