@@ -27,6 +27,9 @@ public:
     /*重写按下事件*/
     void mousePressEvent(QMouseEvent *e);
 
+    /*是否胜利的标志*/
+    bool isWin;
+
 signals:
 
 public slots:

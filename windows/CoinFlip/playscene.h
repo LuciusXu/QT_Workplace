@@ -16,6 +16,9 @@ public:
     int gameArray[4][4]; //二维数组维护每关的具体数据
     MyCoin *coinBtn[4][4];
 
+    /*是否胜利的标志*/
+    bool isWin;
+
 signals:
     void chooseSceneBack();
 public slots:

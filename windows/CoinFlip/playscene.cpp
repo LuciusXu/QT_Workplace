@@ -127,6 +127,32 @@ PlayScene::PlayScene(int levelNum)
                         coinBtn[coin->posX][coin->posY - 1]->changeFlag();
                         this->gameArray[coin->posX][coin->posY - 1] = this->gameArray[coin->posX][coin->posY - 1] == 0 ? 1 : 0;
                     }
+
+                    /*判断是否胜利*/
+                    this->isWin = true;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (coinBtn[i][j]->flag == false) //只要一个为反面，即失败
+                            {
+                                this->isWin = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (this->isWin)
+                    {
+                        qDebug() << "胜利";
+                        /*将所有按钮胜利标志改为true,如果再次点击按钮直接return,不做响应*/
+                        for (int i = 0; i < 4; i++)
+                        {
+                            for (int j = 0; j < 4; j++)
+                            {
+                                coinBtn[i][j]->isWin = true;
+                            }
+                        }
+                    }
                 });
 
 
