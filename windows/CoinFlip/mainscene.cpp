@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QSound>
 
 MainScene::MainScene(QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +20,9 @@ MainScene::MainScene(QWidget *parent) :
     connect(ui->actionQuit, &QAction::triggered, [=](){
         this->close();
     });                                                 //退出按钮实现
+
+    /*准备开始按钮的音效*/
+    QSound *startSound = new QSound(":/res/TapButtonSound.wav", this);
 
     /*开始按钮*/
     MyPushButton * startBtn = new MyPushButton(":/res/MenuSceneStartButton.png");
@@ -37,6 +41,8 @@ MainScene::MainScene(QWidget *parent) :
     /*监听开始按钮*/
     connect(startBtn, &MyPushButton::clicked, [=](){
        qDebug() << "点击了开始按钮";
+       /*播放开始音效*/
+       startSound->play();
        /*实现点击特效*/
         startBtn->zoom1();
         startBtn->zoom2();

@@ -8,6 +8,7 @@
 #include "mycoin.h"
 #include "dataconfig.h"
 #include <QPropertyAnimation>
+#include <QSound>
 
 PlayScene::PlayScene(int levelNum)
 {
@@ -29,6 +30,11 @@ PlayScene::PlayScene(int levelNum)
         this->close();
     });//点击退出按钮实现退出
 
+    /*游戏场景添加音效资源*/
+    QSound *backSound = new QSound(":/res/BackButtonSound.wav", this);//返回音效
+    QSound *flipSound = new QSound(":/res/ConFlipSound.wav", this);//翻金币音效
+    QSound *winSound = new QSound(":/res/LevelWinSound.wav", this);//胜利音效
+
     /*返回按钮*/
     MyPushButton *backBtn = new MyPushButton(":/res/BackButton.png", ":/res/BackButtonSelected.png"); //加载按钮图片
     backBtn->setParent(this); //设置父类
@@ -37,6 +43,7 @@ PlayScene::PlayScene(int levelNum)
     /*点击返回*/
     connect(backBtn, &MyPushButton::clicked, [=](){
        qDebug() << "翻金币场景：点击了返回按钮";
+       backSound->play(); //播放返回音效
        /*延时返回*/
        QTimer::singleShot(500, this, [=](){
             emit this->chooseSceneBack();
@@ -112,6 +119,16 @@ PlayScene::PlayScene(int levelNum)
 
             /*点击金币 进行翻转*/
             connect(coin, &MyCoin::clicked, [=](){
+                 flipSound->play();//播放翻转金币音效
+                /*点击按钮，将所有按钮都先禁用*/
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        this->coinBtn[i][j]->isWin = true;
+                    }
+                }
+
                 coin->changeFlag();
                 this->gameArray[i][j] = this->gameArray[i][j] == 0 ? 1 : 0;
 
@@ -138,6 +155,15 @@ PlayScene::PlayScene(int levelNum)
                         this->gameArray[coin->posX][coin->posY - 1] = this->gameArray[coin->posX][coin->posY - 1] == 0 ? 1 : 0;
                     }
 
+                    /*翻完周围金币后，将所有金币解开禁用*/
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            this->coinBtn[i][j]->isWin = false;
+                        }
+                    }
+
                     /*判断是否胜利*/
                     this->isWin = true;
                     for (int i = 0; i < 4; i++)
@@ -153,6 +179,7 @@ PlayScene::PlayScene(int levelNum)
                     }
                     if (this->isWin)
                     {
+                        winSound->play();//播放胜利音效
                         qDebug() << "胜利";
                         /*将所有按钮胜利标志改为true,如果再次点击按钮直接return,不做响应*/
                         for (int i = 0; i < 4; i++)
