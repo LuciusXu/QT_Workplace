@@ -33,6 +33,7 @@ MyCoin::MyCoin(QString btnImg)
         if (this->min > this->max)
         {
             this->min = 1;
+            isAnimation = false; //动画标志
             timer1->stop();
         }
     });
@@ -50,9 +51,22 @@ MyCoin::MyCoin(QString btnImg)
         if (this->max < this->min)
         {
             this->max = 8;
+            isAnimation = false; //动画标志
             timer2->stop();
         }
     });
+}
+
+void MyCoin::mousePressEvent(QMouseEvent *e)
+{
+    if (this->isAnimation)
+    {
+        return;
+    }
+    else
+    {
+        QPushButton::mousePressEvent(e);
+    }
 }
 
 /*改变正反面标志的方法*/
@@ -61,11 +75,13 @@ void MyCoin::changeFlag()
     if (this->flag) //如果是正面，翻成反面
     {
         timer1->start(30); //开启正面翻反面的定时器
+        isAnimation = true; //动画标志
         this->flag = false;
     }
     else //反面翻正面
     {
         timer2->start(30);
+        isAnimation = true; //动画标志
         this->flag = true;
     }
 }

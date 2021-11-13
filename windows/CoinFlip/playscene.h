@@ -2,6 +2,7 @@
 #define PLAYSCENE_H
 
 #include <QMainWindow>
+#include "mycoin.h"
 
 class PlayScene : public QMainWindow
 {
@@ -13,6 +14,7 @@ public:
     /*重写paintEvent事件*/
     void paintEvent(QPaintEvent *);
     int gameArray[4][4]; //二维数组维护每关的具体数据
+    MyCoin *coinBtn[4][4];
 
 signals:
     void chooseSceneBack();

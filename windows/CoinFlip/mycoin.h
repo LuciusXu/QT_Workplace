@@ -21,6 +21,12 @@ public:
     int min = 1;
     int max = 8;
 
+    /*执行动画的标志*/
+    bool isAnimation = false;
+
+    /*重写按下事件*/
+    void mousePressEvent(QMouseEvent *e);
+
 signals:
 
 public slots:
